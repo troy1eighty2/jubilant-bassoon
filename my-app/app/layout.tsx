@@ -2,17 +2,17 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Image from "next/image";
+import Link from "next/link";
 import hero from "@/public/github.png";
 
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
+  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
 
 const geistSans = Geist({
@@ -38,33 +38,61 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen border-5`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex flex-col min-h-screen bg-background`}
       >
-        <div className="flex min-h-[100%] h-auto border p-10">
-          <Image
-            src={hero}
-            height={100}
-          />
+        <div className="flex min-h-[100%] h-auto border justify-center p-5">
+          <Image src={hero} height={100} alt="logo" />
         </div>
-        <NavigationMenu>
-          <NavigationMenuList>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Home</NavigationMenuTrigger>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>About Me</NavigationMenuTrigger>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Services</NavigationMenuTrigger>
-              <NavigationMenuContent>
-                <NavigationMenuLink>Link</NavigationMenuLink>
-              </NavigationMenuContent>
-            </NavigationMenuItem>
-            <NavigationMenuItem>
-              <NavigationMenuTrigger>Contact Me</NavigationMenuTrigger>
-            </NavigationMenuItem>
-          </NavigationMenuList>
-        </NavigationMenu>
+        <div className="flex min-h-[100%] h-auto border p-5 justify-center">
+          <NavigationMenu>
+            <NavigationMenuList className="flex-wrap ">
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={navigationMenuTriggerStyle()}
+                >
+                  <Link href="/">Home</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={navigationMenuTriggerStyle()}
+                >
+                  <Link href="/about">About</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuTrigger>Services</NavigationMenuTrigger>
+                <NavigationMenuContent className="flex gap-2 ">
+                  <NavigationMenuLink className="min-w-40 grow">
+                    <p className="font-bold">Sample Item</p>
+                    <p className="">short description of the service</p>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink className="min-w-40 grow">
+                    <p className="font-bold">Sample Item1</p>
+                    <p className="">
+                      longer description of this service. blurb detailing what
+                      it is and what it do
+                    </p>
+                  </NavigationMenuLink>
+                  <NavigationMenuLink className="min-w-40 grow">
+                    <p className="font-bold">Item</p>
+                    <p className="">Item</p>
+                  </NavigationMenuLink>
+                </NavigationMenuContent>
+              </NavigationMenuItem>
+              <NavigationMenuItem>
+                <NavigationMenuLink
+                  asChild
+                  className={navigationMenuTriggerStyle()}
+                >
+                  <Link href="/contact">Contact</Link>
+                </NavigationMenuLink>
+              </NavigationMenuItem>
+            </NavigationMenuList>
+          </NavigationMenu>
+        </div>
         {children}
       </body>
     </html>
